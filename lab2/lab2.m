@@ -11,6 +11,7 @@ T = 1/Fs;                        %Интервал дискретизации(с
 f=0:Fs/2;                        %Диапазон изменения частоты для АЧХ
                                  %(от 0 Гц до Fs/2 Гц с шагом 1Гц)
 
+                               
 
 
 figure 
@@ -51,6 +52,32 @@ hold on
 stem(Y2_step, 'r')     %График выходной последовательности
 
 
+X_ECG = load('W2_01.txt');
+N_1 = length(X_ECG)
+Y_ECG_1 = response(X_ECG, N_1, M1, B1)
+
+subplot(4, 2, 7) 
+stem(X_ECG, '.')     %График входной последовательности
+hold on
+stem(Y_ECG_1, 'r')     %График выходной последовательности
+
+Y_ECG_2 = response(X_ECG, N_1, M2, B2)
+subplot(4, 2, 8) 
+stem(X_ECG, '.')     %График входной последовательности
+hold on
+stem(Y_ECG_2, 'r')     %График выходной последовательности
+
+function Y = response(X, N, M, B)
+    Y = zeros(N, 1);
+    for n=M:N                        %программный цикл в котором
+        j = 0                         %создается выходной массив,
+        for i = 1:M;          
+            Y(n) = Y(n) + B(i)*X(n - j)
+            j = j + 1
+        end
+
+    end
+end
 function [Y, X] = impulse_response(N, M, B)
                     %Число значений во входной последовательности
     for n=1:N;         %Программный цикл в котором создается входной
@@ -60,7 +87,7 @@ function [Y, X] = impulse_response(N, M, B)
     Y = zeros(1,N);
     for n=M:N                        %программный цикл в котором
         j = 0                         %создается выходной массив,
-        for i = 1:length(B);          
+        for i = 1:M;          
             Y(n) = Y(n) + B(i)*X(n - j)
             j = j + 1
 
@@ -68,7 +95,7 @@ function [Y, X] = impulse_response(N, M, B)
 
     end
 end
-
+    
 function [Y, X] = step_response(N, M, B)
                     %Число значений во входной последовательности
     for n=1:(N/2-1);         %Программный цикл в котором создается входной
@@ -81,7 +108,7 @@ function [Y, X] = step_response(N, M, B)
     Y = zeros(1,N);
     for n=M:N                        %программный цикл в котором
         j = 0                         %создается выходной массив,
-        for i = 1:length(B);          
+        for i = 1:M;          
             Y(n) = Y(n) + B(i)*X(n - j)
             j = j + 1
 
