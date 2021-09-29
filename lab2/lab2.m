@@ -30,10 +30,12 @@ H2 = abs(B2((M2-1)/2) + B2(((M2-1)/2))*sin(2*pi*f*T)+ B2(((M2-1)/2) - 1)*sin(4*p
 
 subplot(5,2,3)
 plot(f, H1)
+xlim([0 125])
 title('АЧХ 1-го фильтра')
 
 subplot(5,2,4)
 plot(f, H2)
+xlim([0 125])
 title('АЧХ 2-го фильтра')
 
 
