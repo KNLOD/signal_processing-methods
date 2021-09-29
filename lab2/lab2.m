@@ -11,69 +11,82 @@ T = 1/Fs;                        %Интервал дискретизации(с
 f=0:Fs/2;                        %Диапазон изменения частоты для АЧХ
                                  %(от 0 Гц до Fs/2 Гц с шагом 1Гц)
 
-                               
-
 
 figure 
-subplot(4,2,1)
+subplot(5,2,1)
 stem(B1) 
 title('Filter 1')
 
-subplot(4,2,2)
+subplot(5,2,2)
 stem(B1) 
 title('Filter 2')
 
-[Y1_imp, X1_imp] = impulse_response(20, M1,B1)
+%Расчет ачх
+H1 = abs(B1((M1-1)/2) + B1(((M1-1)/2))*cos(2*pi*f*T)+ B1(((M1-1)/2) - 1)*cos(4*pi*f*T));
+H2 = abs(B2((M2-1)/2) + B2(((M2-1)/2))*sin(2*pi*f*T)+ B2(((M2-1)/2) - 1)*sin(4*pi*f*T));
 
-subplot(4, 2, 3) 
+subplot(5,2,3)
+plot(f, H1)
+title('АЧХ 1-го фильтра')
+
+subplot(5,2,4)
+plot(f, H2)
+title('АЧХ 2-го фильтра')
+
+[Y1_imp, X1_imp] = impulse_response(20, M1,B1);
+
+subplot(5, 2, 5) 
 stem(X1_imp, '.')     %График входной последовательности
 hold on
 stem(Y1_imp, 'r')     %График выходной последовательности
+title('Импульсная характеристика 1-го фильтра')
   
-[Y2_imp, X2_imp] = impulse_response(20, M2,B2)
+[Y2_imp, X2_imp] = impulse_response(20, M2,B2);
 
-subplot(4, 2, 4) 
+subplot(5, 2, 6) 
 stem(X2_imp, '.')     %График входной последовательности
 hold on
 stem(Y2_imp, 'r')     %График выходной последовательности
+title('Импульсная характеристика 2-го фильтра')
 
-[Y1_step, X1_step] = step_response(20, M1,B1)
+[Y1_step, X1_step] = step_response(20, M1,B1);
 
-subplot(4, 2, 5) 
+subplot(5, 2, 7) 
 stem(X1_step, '.')     %График входной последовательности
 hold on
 stem(Y1_step, 'r')     %График выходной последовательности
+title('Переходная характеристика 1-го фильтра')
+[Y2_step, X2_step] = step_response(20, M2,B2);
 
-[Y2_step, X2_step] = step_response(20, M2,B2)
-
-subplot(4, 2, 6) 
+subplot(5, 2, 8) 
 stem(X2_step, '.')     %График входной последовательности
 hold on
 stem(Y2_step, 'r')     %График выходной последовательности
-
+title('Переходная характеристика 2-го фильтра')
 
 X_ECG = load('W2_01.txt');
-N_1 = length(X_ECG)
-Y_ECG_1 = response(X_ECG, N_1, M1, B1)
+N_1 = length(X_ECG);
+Y_ECG_1 = response(X_ECG, N_1, M1, B1);
 
-subplot(4, 2, 7) 
-stem(X_ECG, '.')     %График входной последовательности
+subplot(5, 2, 9) 
+plot(X_ECG, 'b')     %График входной последовательности
 hold on
-stem(Y_ECG_1, 'r')     %График выходной последовательности
+plot(Y_ECG_1, 'r')     %График выходной последовательности
 
-Y_ECG_2 = response(X_ECG, N_1, M2, B2)
-subplot(4, 2, 8) 
-stem(X_ECG, '.')     %График входной последовательности
+Y_ECG_2 = response(X_ECG, N_1, M2, B2);
+subplot(5, 2, 10) 
+plot(X_ECG, 'b')     %График входной последовательности
 hold on
-stem(Y_ECG_2, 'r')     %График выходной последовательности
+plot(Y_ECG_2, 'r')     %График выходной последовательности
+
 
 function Y = response(X, N, M, B)
     Y = zeros(N, 1);
-    for n=M:N                        %программный цикл в котором
-        j = 0                         %создается выходной массив,
+    for n=M:N;                        %программный цикл в котором
+        j = 0;                         %создается выходной массив,
         for i = 1:M;          
-            Y(n) = Y(n) + B(i)*X(n - j)
-            j = j + 1
+            Y(n) = Y(n) + B(i)*X(n - j);
+            j = j + 1;
         end
 
     end
@@ -85,11 +98,11 @@ function [Y, X] = impulse_response(N, M, B)
     end
     X(10) = 1;
     Y = zeros(1,N);
-    for n=M:N                        %программный цикл в котором
-        j = 0                         %создается выходной массив,
+    for n=M:N;                        %программный цикл в котором
+        j = 0;                         %создается выходной массив,
         for i = 1:M;          
-            Y(n) = Y(n) + B(i)*X(n - j)
-            j = j + 1
+            Y(n) = Y(n) + B(i)*X(n - j);
+            j = j + 1;
 
         end
 
@@ -106,11 +119,11 @@ function [Y, X] = step_response(N, M, B)
     end
     X(10) = 1;
     Y = zeros(1,N);
-    for n=M:N                        %программный цикл в котором
-        j = 0                         %создается выходной массив,
+    for n=M:N;                        %программный цикл в котором
+        j = 0;                         %создается выходной массив,
         for i = 1:M;          
-            Y(n) = Y(n) + B(i)*X(n - j)
-            j = j + 1
+            Y(n) = Y(n) + B(i)*X(n - j);
+            j = j + 1;
 
         end
 
