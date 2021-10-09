@@ -18,15 +18,15 @@ stem(B1)
 title('Filter 1')
 
 subplot(5,2,2)
-stem(B1) 
+stem(B2) 
 title('Filter 2')
 
 
 %{
 Расчет ачх
 %}
-H1 = abs(B1((M1-1)/2) + B1(((M1-1)/2))*cos(2*pi*f*T)+ B1(((M1-1)/2) - 1)*cos(4*pi*f*T));
-H2 = abs(B2((M2-1)/2) + B2(((M2-1)/2))*sin(2*pi*f*T)+ B2(((M2-1)/2) - 1)*sin(4*pi*f*T));
+H1 = abs(B1((M1-1)/2) + 2*(B1(((M1-1)/2))*cos(2*pi*f*T)+ B1(((M1-1)/2) - 1)*cos(4*pi*f*T)));
+H2 = abs(B2((M2-1)/2) + 2*(B2(((M2-1)/2))*sin(2*pi*f*T)+ B2(((M2-1)/2) - 1)*sin(4*pi*f*T)));
 
 subplot(5,2,3)
 plot(f, H1)
@@ -87,17 +87,20 @@ X_ECG = load('W2_01.txt');
 N_1 = length(X_ECG);
 Y_ECG_1 = response(X_ECG, N_1, M1, B1);
 
-subplot(5, 2, 9) 
+figure
+subplot(2, 1, 1) 
 plot(X_ECG, 'b')                        %График входной последовательности
 hold on
 plot(Y_ECG_1, 'r')                      %График выходной последовательности
+set(gca, 'YLim', [-40, 100])
+
 
 Y_ECG_2 = response(X_ECG, N_1, M2, B2);
-subplot(5, 2, 10) 
+subplot(2, 1, 2) 
 plot(X_ECG, 'b')                        %График входной последовательности
 hold on
 plot(Y_ECG_2, 'r')                      %График выходной последовательности
-
+set(gca, 'YLim', [-40, 100])
 
 
 
@@ -146,7 +149,6 @@ function [Y, X] = step_response(N, M, B)
         for i = 1:M;          
             Y(n) = Y(n) + B(i)*X(n - j);
             j = j + 1;
-
         end
 
     end
