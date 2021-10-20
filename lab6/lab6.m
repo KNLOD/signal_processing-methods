@@ -45,4 +45,14 @@ for i=i:k                     %
 	XLimits(1:2)=QRS(i)*T;        %
 	HLine=line(XLimits, YLimits)  %
 	set(HLine, 'LineStyle', '--')
-	
+end
+D1=D1/(k-1);           % Средный размах
+
+% Текстовый элемент с надписью "SaO2="	
+hTxt1=uicontrol(hFig, 'Style', 'text', 'String', 'SaO2=',...
+	'Position', [x1,y1,w1,h1], 'Backgroundcolor', [1 1 1]);
+% Поле для вывода значения SaO2:
+hEd=uicontro(hFig, 'Style', 'edit', 'Positon', [x2,y2,w2,h2],...
+	'Backgroundcolor', [1 1 1], ''HorizontalAlignment','left');
+set(hEd, 'String', num2str(SaO2))   % Вывод значения "SaO2"
+
