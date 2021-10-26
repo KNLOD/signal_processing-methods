@@ -13,7 +13,7 @@ t=[1:N].*T;
 X0=200;        % Координата "x" (на экране) нижнего левого угла
 Y0=200;        % Координата "y" (на экране) нижнего левого угла
 W0=800;        % Ширина окна
-H0=500;        % Высота окна
+H0=700;        % Высота окна
 hFig=figure('Position',[X0,Y0,W0,H0]) %Создание окна
 
 
@@ -22,15 +22,17 @@ dx=50;         % Расстояние по "х" между 1-м и 2-м поля
 y1=30;         % Координата "у" (в окне) нижнего левого угла 1-го поля
 dy=50;         % Расстояние по "y" между 1-м и 2-м полями
 w=300;         % Ширина 1-го и 2-го полей вывода графиков
-h=200;         % Высота 1-го и 2-го полей вывода графикво
+h=125;         % Высота 1-го и 2-го полей вывода графикво
 
-% Создание 4-го поля
-hAxes4=axes('Units','pixels','Position',[x1,y1,w,h])
+% Создание 1-го поля
+hAxes1=axes('Units','pixels','Position',[x1,y1+3*dy+3*h,w,h])
 
 % Создание 2-го поля
-hAxes2=axes('Units','pixels','Position',[x1+dx+w,y1+dy+h,w,h])
-% Создание 1-го поля
-hAxes1=axes('Units','pixels','Position',[x1,y1+dy+h,w,h])
+hAxes2=axes('Units','pixels','Position',[x1,y1+2*dy+2*h,w,h])
+% Создание 3-го поля
+hAxes3=axes('Units','pixels','Position',[x1,y1+dy+h,w,h])
+% Создание 4-го поля
+hAxes4=axes('Units','pixels','Position',[x1,y1,w,h])
 
 
 %{
@@ -65,6 +67,10 @@ for i=3:N;
 end
 axes(hAxes2)
 plot(t, ECG_Dif)
+
+axes(hAxes3)
+abs_ECG_Dif=abs(ECG_Dif);
+plot(t,abs_ECG_Dif)
 
 axes(hAxes4)
 tmax=t(N);
@@ -116,9 +122,9 @@ SaO2=((0.872-0.16*alpha)/(0.14*alpha+0.754))*100
 
 % Текстовый элемент с надписью "SaO2="	
 hTxt1=uicontrol(hFig, 'Style', 'text', 'String', 'SaO2=',...
-	'Position', [x1+dx+w,y1,w,h], 'Backgroundcolor', [1 1 1])
+	'Position', [x1+dx+w,y1,100,h], 'Backgroundcolor', [1 1 1])
 % Поле для вывода значения SaO2:
-hEd=uicontrol(hFig, 'Style', 'edit', 'Position', [x1+dx+w,y1,w,h-20],...
+hEd=uicontrol(hFig, 'Style', 'edit', 'Position', [x1+dx+w,y1,100,h-20],...
 	'Backgroundcolor', [1 1 1], 'HorizontalAlignment','center');
 set(hEd, 'String', num2str(SaO2)+"%")   % Вывод значения "SaO2"
 
@@ -126,8 +132,8 @@ function [D]=Der(k,Puls,QRS)
 D=0;
 for i=1:(k-1)
     clear m                   % Предварительное удаление массива "m1"
-    m=Puls(QRS(i):QRS(i+1)); % Один сердечный цикл   
-    D=D+(max(m)-min(m));    % Сумма значений размаха
+    m=Puls(QRS(i):QRS(i+1));  % Один сердечный цикл   
+    D=D+(max(m)-min(m));      % Сумма значений размаха
 end
 D=D/(k-1);           % Средный размах
 end
