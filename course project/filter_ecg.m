@@ -3,7 +3,7 @@ function y = filter_ecg(x,Fs, b)
 %   Detailed explanation goes here
 T=1/Fs
 N=length(x)
-B=length(B)
+B=length(b)
 y=zeros(N,1)
 
 for i=1:N;
