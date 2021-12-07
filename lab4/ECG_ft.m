@@ -63,6 +63,7 @@ spectral_analysis(VFibr, t, tmax, Fs, hAxes1, hAxes2, hAxes3)
 
 
 
+
 function as=magnitude_spektrum(ft,tmax,Fs);
 %{
 ----Расчет амплитудного спектра----
@@ -71,9 +72,9 @@ function as=magnitude_spektrum(ft,tmax,Fs);
 N=tmax*Fs;
 for j=1:N
     if (j==1)
-        as(j)=sqrt(real(ft(j))^2+imag(ft(j))^2)/N;
+        as(j)=(sqrt(real(ft(j)))^2+imag(ft(j))^2)/N;
     else
-        as(j)=sqrt(real(ft(j))^2+imag(ft(j))^2)/N*2;
+        as(j)=(sqrt(real(ft(j)))^2+imag(ft(j))^2)/N*2;
     end
 end
 end
