@@ -118,7 +118,7 @@ plot(tcf, ccf23)
 axes(hAxes3)
 set(hAxes3, 'XLim', [-tmax+T tmax-T]);
 hold on
-ccf31=xcorr(s3,s1, 'coeff'); % ВКФ для сигналов 's3' и 's1'
+ccf31=xcorr(s1,s2, 'coeff'); % ВКФ для сигналов 's1' и 's2'
 plot(tcf, ccf31)
 
 

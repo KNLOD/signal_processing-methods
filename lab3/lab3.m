@@ -107,7 +107,9 @@ ccf23=xcorr(s2,s3, 'coeff'); % ВКФ для сигналов 's2' и 's3'
 plot(tcf, ccf23)
 
 axes(hAxes3)
-ccf31=xcorr(s3,s1, 'coeff'); % ВКФ для сигналов 's3' и 's1'
-plot(tcf, ccf31)
+set(hAxes3, 'YLim', [-0.6 +0.8])
+hold on
+ccf21=xcorr(s1,s2, 'coeff'); % ВКФ для сигналов 's1' и 's2'
+plot(tcf, ccf21)
 
 
