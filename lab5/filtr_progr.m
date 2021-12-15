@@ -6,17 +6,18 @@ da=str2num(str);
 if c.Value==1
     x=load('W5_01.txt');
     Fs=250
+    t=[0:1/Fs:0.996]
     axes(hAxes3)
-    plot(x);
+    plot(t,x);
 
     axes(hAxes2)
     y=fs50(x,Fs,da);
-    plot(y);
+    plot(t,y);
     for i=1:length(x)
         m(i)=y(i)-x(i)
     end
     axes(hAxes1)
-    plot(m);
+    plot(t,m);
 end
 if c.Value==2
     Fs=500
